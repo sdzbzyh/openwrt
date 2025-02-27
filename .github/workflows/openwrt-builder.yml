@@ -52,14 +52,22 @@ jobs:
 #    - name: Don't kill instace
 #      if: ${{ failure() }}
 #      run: sleep 1h # Prevent to killing instance after failure
-    - uses: shaowenchen/debugger-action@v2
-      name: debugger
-      timeout-minutes: 30
-      continue-on-error: true
-      with:
+      - name: debugger
+        run: |
+          curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
+          | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
+          && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" \
+          | sudo tee /etc/apt/sources.list.d/ngrok.list \
+          && sudo apt update \
+          && sudo apt install ngrok
+        uses: shaowenchen/debugger-action@v2
+
+        timeout-minutes: 30
+        continue-on-error: true
+        with:
           ngrok_token: ${{ secrets.NGROK_TOKEN }}
-    - name: Checkout
-      uses: actions/checkout@main
+      - name: Checkout
+        uses: actions/checkout@main
 
     - name: Initialization environment
       env:
