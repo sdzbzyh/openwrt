@@ -13,6 +13,9 @@
 name: OpenWrt Builder
 
 on:
+  push:
+    branches:
+      - test_ngork
   repository_dispatch:
   workflow_dispatch:
 
