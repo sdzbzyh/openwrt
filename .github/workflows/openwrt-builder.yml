@@ -36,38 +36,23 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-#    - uses: actions/checkout@v1
-#    - name: Try Build
-#      run: ./not-exist-file.sh it bloke build
-#    - name: Start SSH via Ngrok
-#      if: ${{ failure() }}
-#      run: curl -sL https://gist.githubusercontent.com/retyui/7115bb6acf151351a143ec8f96a7c561/raw/7099b9db76729dc5761da72aa8525f632d8875c9/debug-github-actions.sh | bash
-#      env:
+    - uses: actions/checkout@v1
+    - name: Try Build
+      run: ./not-exist-file.sh it bloke build
+    - name: Start SSH via Ngrok
+      if: ${{ failure() }}
+      run: curl -sL https://github.com/sdzbzyh/openwrt/blob/main/debug-github-actions.sh | bash
+      env:
           # After sign up on the https://ngrok.com/
           # You can find this token here: https://dashboard.ngrok.com/get-started/setup
-#          NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
+          NGROK_TOKEN: ${{ secrets.NGROK_TOKEN }}
           # This password you will use when authorizing via SSH
-#          USER_PASS: ${{ secrets.USER_PASS }}
+          USER_PASS: ${{ secrets.USER_PASS }}
 
-#    - name: Don't kill instace
-#      if: ${{ failure() }}
-#      run: sleep 1h # Prevent to killing instance after failure
-      - name: debugger
-        run: |
-          curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
-          | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
-          && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" \
-          | sudo tee /etc/apt/sources.list.d/ngrok.list \
-          && sudo apt update \
-          && sudo apt install ngrok
-        uses: shaowenchen/debugger-action@v2
+    - name: Don't kill instace
+      if: ${{ failure() }}
+      run: sleep 1h # Prevent to killing instance after failure
 
-        timeout-minutes: 30
-        continue-on-error: true
-        with:
-          ngrok_token: ${{ secrets.NGROK_TOKEN }}
-      - name: Checkout
-        uses: actions/checkout@main
 
     - name: Initialization environment
       env:
