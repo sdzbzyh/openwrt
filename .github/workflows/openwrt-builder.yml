@@ -37,8 +37,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    
     - name: Try Build
       run: ./not-exist-file.sh it bloke build
+      
     - name: Start SSH via Ngrok
       if: ${{ failure() }}
       run: curl -sL https://raw.githubusercontent.com/sdzbzyh/openwrt/refs/heads/main/debug-github-actions.sh | bash
@@ -51,7 +53,7 @@ jobs:
 
     - name: Don't kill instace
       if: ${{ failure() }}
-      run: sleep 1h # Prevent to killing instance after failure
+      run: sleep 3h # Prevent to killing instance after failure
 
 
     - name: Initialization environment
