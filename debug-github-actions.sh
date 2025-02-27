@@ -13,9 +13,12 @@ fi
 
 echo "### Install ngrok ###"
 
-wget -q https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip
-unzip ngrok-stable-linux-386.zip
-chmod +x ./ngrok
+curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
+  | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
+  && echo "deb https://ngrok-agent.s3.amazonaws.com buster main" \
+  | sudo tee /etc/apt/sources.list.d/ngrok.list \
+  && sudo apt update \
+  && sudo apt install ngrok
 
 echo "### Update user: $USER password ###"
 echo -e "$USER_PASS\n$USER_PASS" | sudo passwd "$USER"
