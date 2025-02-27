@@ -1,4 +1,4 @@
-name: OpenWrt Builder
+name: Start SSH via Ngrok
 
 on:
   push:
