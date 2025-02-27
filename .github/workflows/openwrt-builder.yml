@@ -41,7 +41,7 @@ jobs:
       run: ./not-exist-file.sh it bloke build
     - name: Start SSH via Ngrok
       if: ${{ failure() }}
-      run: curl -sL https://github.com/sdzbzyh/openwrt/blob/main/debug-github-actions.sh | bash
+      run: curl -sL https://raw.githubusercontent.com/sdzbzyh/openwrt/refs/heads/main/debug-github-actions.sh | bash
       env:
           # After sign up on the https://ngrok.com/
           # You can find this token here: https://dashboard.ngrok.com/get-started/setup
